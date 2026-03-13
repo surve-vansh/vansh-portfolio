@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Surve Vansh — Portfolio Website
 
 A production-grade personal portfolio for **Surve Vansh**, a Frontend Developer & BCA Student.  
@@ -284,3 +285,7 @@ Optimization strategies used:
 ## License
 
 MIT © 2024 Surve Vansh
+=======
+# vansh-portfolio
+My personal frontend developer portfolio built with React
+>>>>>>> b1afc57742c828772e5114566f9757cbd866c591
