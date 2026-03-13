@@ -9,8 +9,8 @@ export const projects: Project[] = [
     longDescription:
       'Built with Three.js and React, this portfolio features real-time 3D rendering, custom shader materials, interactive particle systems, and smooth scroll-driven animations. Performance optimized with LOD management and GPU instancing.',
     techStack: ['React', 'Three.js', 'TypeScript', 'Framer Motion', 'GLSL', 'Vite'],
-    githubUrl: 'https://github.com/survevansh/3d-portfolio',
-    liveUrl: 'https://vpixel-studio.netlify.app/',
+    githubUrl: 'https://github.com/surve-vansh/vansh-portfolio',
+    liveUrl: 'https://vansh-portfolio-alpha.vercel.app',
     videoUrl: 'https://example.com/demo-video-1.mp4',
     imageUrl: '/projects/portfolio-preview.png',
     featured: true,
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     longDescription:
       'A React-based eCommerce frontend built using component-based architecture. The application displays product listings and reusable UI components with a responsive layout. The project demonstrates React fundamentals, component structure, and modern frontend development practices.',
     techStack: ['React', 'JavaScript', 'Tailwind CSS', 'Vite'],
-    githubUrl: 'https://github.com/survevansh/react-ecommerce-spa',
+    githubUrl: 'https://github.com/surve-vansh/shopeverse',
     liveUrl: 'https://shope-verse.netlify.app/',
     imageUrl: '/projects/react-ecommerce-preview.png',
     featured: true,

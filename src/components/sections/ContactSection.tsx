@@ -24,7 +24,7 @@ const contactInfo = [
     ),
     label: 'GitHub',
     value: 'github.com/survevansh',
-    href: 'https://github.com/survevansh',
+    href: 'https://github.com/surve-vansh',
   },
   {
     icon: (
@@ -34,7 +34,7 @@ const contactInfo = [
     ),
     label: 'LinkedIn',
     value: 'linkedin.com/in/survevansh',
-    href: 'https://linkedin.com/in/survevansh',
+    href: 'https://www.linkedin.com/in/surve-vansh-1a5a43323/',
   },
 ]
 
@@ -48,7 +48,7 @@ function Input({ label, error, id, ...props }: InputProps) {
     <div className="space-y-1.5">
       <label htmlFor={id} className="block text-sm font-medium text-text-primary">
         {label}
-        {props.required && <span className="text-red-400 ml-1" aria-hidden="true">*</span>}
+        {props.required && <span className="ml-1 text-red-400" aria-hidden="true">*</span>}
         {props.required && <span className="sr-only"> (required)</span>}
       </label>
       <input
@@ -61,7 +61,7 @@ function Input({ label, error, id, ...props }: InputProps) {
         {...props}
       />
       {error && (
-        <p id={`${id}-error`} className="text-xs text-red-400 flex items-center gap-1" role="alert">
+        <p id={`${id}-error`} className="flex items-center gap-1 text-xs text-red-400" role="alert">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
@@ -82,7 +82,7 @@ function Textarea({ label, error, id, ...props }: TextareaProps) {
     <div className="space-y-1.5">
       <label htmlFor={id} className="block text-sm font-medium text-text-primary">
         {label}
-        {props.required && <span className="text-red-400 ml-1" aria-hidden="true">*</span>}
+        {props.required && <span className="ml-1 text-red-400" aria-hidden="true">*</span>}
         {props.required && <span className="sr-only"> (required)</span>}
       </label>
       <textarea
@@ -96,7 +96,7 @@ function Textarea({ label, error, id, ...props }: TextareaProps) {
         {...props}
       />
       {error && (
-        <p id={`${id}-error`} className="text-xs text-red-400 flex items-center gap-1" role="alert">
+        <p id={`${id}-error`} className="flex items-center gap-1 text-xs text-red-400" role="alert">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
@@ -112,10 +112,10 @@ export default function ContactSection() {
     useContactForm()
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden" aria-label="Contact me">
+    <section id="contact" className="relative overflow-hidden section-padding" aria-label="Contact me">
       {/* Background */}
-      <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent -translate-x-1/2 pointer-events-none" aria-hidden="true" />
-      <div className="absolute top-1/4 left-0 w-80 h-80 bg-accent-purple/5 rounded-full blur-3xl -translate-x-1/2 pointer-events-none" aria-hidden="true" />
+      <div className="absolute top-0 w-px h-full -translate-x-1/2 pointer-events-none left-1/2 bg-gradient-to-b from-transparent via-border to-transparent" aria-hidden="true" />
+      <div className="absolute left-0 -translate-x-1/2 rounded-full pointer-events-none top-1/4 w-80 h-80 bg-accent-purple/5 blur-3xl" aria-hidden="true" />
 
       <div className="section-container">
         <SectionHeader
@@ -126,17 +126,17 @@ export default function ContactSection() {
           className="mb-12"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 max-w-5xl mx-auto">
+        <div className="grid max-w-5xl grid-cols-1 gap-10 mx-auto lg:grid-cols-5">
           {/* Contact info sidebar */}
           <motion.div
-            className="lg:col-span-2 space-y-6"
+            className="space-y-6 lg:col-span-2"
             variants={staggerContainerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <motion.div variants={staggerChildVariants} className="glass-card p-6 space-y-5">
-              <h3 className="font-display font-bold text-base text-text-primary">
+            <motion.div variants={staggerChildVariants} className="p-6 space-y-5 glass-card">
+              <h3 className="text-base font-bold font-display text-text-primary">
                 Contact Info
               </h3>
 
@@ -151,12 +151,12 @@ export default function ContactSection() {
                     aria-label={`${info.label}: ${info.value}`}
                     role="listitem"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-surface-2 border border-border flex items-center justify-center text-text-muted group-hover:text-accent-blue group-hover:border-accent-blue/40 group-hover:bg-accent-blue/10 transition-all duration-200 flex-shrink-0">
+                    <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-200 border rounded-xl bg-surface-2 border-border text-text-muted group-hover:text-accent-blue group-hover:border-accent-blue/40 group-hover:bg-accent-blue/10">
                       {info.icon}
                     </div>
                     <div>
-                      <p className="text-xs text-text-muted font-mono">{info.label}</p>
-                      <p className="text-sm font-medium text-text-secondary group-hover:text-accent-blue transition-colors duration-200 truncate">
+                      <p className="font-mono text-xs text-text-muted">{info.label}</p>
+                      <p className="text-sm font-medium truncate transition-colors duration-200 text-text-secondary group-hover:text-accent-blue">
                         {info.value}
                       </p>
                     </div>
@@ -165,15 +165,15 @@ export default function ContactSection() {
               </div>
             </motion.div>
 
-            <motion.div variants={staggerChildVariants} className="glass-card p-6">
-              <h3 className="font-display font-bold text-sm text-text-primary mb-3">
+            <motion.div variants={staggerChildVariants} className="p-6 glass-card">
+              <h3 className="mb-3 text-sm font-bold font-display text-text-primary">
                 Availability
               </h3>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" aria-hidden="true" />
-                <span className="text-sm text-green-400 font-medium">Open to work</span>
+                <span className="text-sm font-medium text-green-400">Open to work</span>
               </div>
-              <p className="text-xs text-text-muted leading-relaxed">
+              <p className="text-xs leading-relaxed text-text-muted">
                 Available for freelance projects, internships, and full-time frontend positions.
                 Response time: within 24 hours.
               </p>
@@ -198,17 +198,17 @@ export default function ContactSection() {
                 aria-live="polite"
               >
                 <motion.div
-                  className="w-16 h-16 rounded-full bg-green-400/15 border border-green-400/30 flex items-center justify-center text-2xl mb-4"
+                  className="flex items-center justify-center w-16 h-16 mb-4 text-2xl border rounded-full bg-green-400/15 border-green-400/30"
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 0.5 }}
                   aria-hidden="true"
                 >
                   ✓
                 </motion.div>
-                <h3 className="font-display font-bold text-xl text-text-primary mb-2">
+                <h3 className="mb-2 text-xl font-bold font-display text-text-primary">
                   Message Sent!
                 </h3>
-                <p className="text-sm text-text-secondary mb-6 max-w-xs">
+                <p className="max-w-xs mb-6 text-sm text-text-secondary">
                   Thank you for reaching out. I'll get back to you within 24 hours.
                 </p>
                 <Button variant="secondary" size="sm" onClick={resetForm}>
@@ -218,11 +218,11 @@ export default function ContactSection() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="glass-card p-6 md:p-8 space-y-5"
+                className="p-6 space-y-5 glass-card md:p-8"
                 noValidate
                 aria-label="Contact form"
               >
-                <h3 className="font-display font-bold text-base text-text-primary sr-only">
+                <h3 className="text-base font-bold sr-only font-display text-text-primary">
                   Send a Message
                 </h3>
 

@@ -72,7 +72,7 @@ export default function AboutSection() {
               </Button>
               <Button
                 as="a"
-                href="https://github.com/survevansh"
+                href="https://github.com/surve-vansh"
                 variant="secondary"
                 leftIcon={
                   <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
