@@ -1,0 +1,143 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "meta": {
+    "name": "Surve Vansh Portfolio Design Tokens",
+    "version": "1.0.0",
+    "description": "Complete design token system for the portfolio. All values map directly to Tailwind config."
+  },
+  "color": {
+    "background": {
+      "base": { "value": "#0a0a0f", "comment": "Primary page background" },
+      "surface": { "value": "#111118", "comment": "Card / elevated surface" },
+      "surface2": { "value": "#1a1a26", "comment": "Nested elevated surface" }
+    },
+    "border": {
+      "default": { "value": "#1e1e2e", "comment": "Subtle dividers and card borders" },
+      "light": { "value": "#2a2a3e", "comment": "Hover-state border" }
+    },
+    "accent": {
+      "blue": { "value": "#4f8ef7", "comment": "Primary action color, links" },
+      "purple": { "value": "#a78bfa", "comment": "Secondary accent, gradient endpoint" },
+      "cyan": { "value": "#22d3ee", "comment": "Tertiary highlight" },
+      "glow": { "value": "#6366f1", "comment": "Glow / shadow color" }
+    },
+    "text": {
+      "primary": { "value": "#f0f0fa", "comment": "Headings, important body copy" },
+      "secondary": { "value": "#8888aa", "comment": "Body copy, descriptions" },
+      "muted": { "value": "#44445a", "comment": "Placeholders, metadata" }
+    },
+    "semantic": {
+      "success": { "value": "#22c55e", "comment": "Success states (green-500)" },
+      "warning": { "value": "#eab308", "comment": "Warning states (yellow-500)" },
+      "error": { "value": "#ef4444", "comment": "Error states (red-500)" },
+      "info": { "value": "#4f8ef7", "comment": "Info states (= accent.blue)" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": { "value": "Syne, sans-serif", "comment": "Headings, logo, section titles" },
+      "body": { "value": "DM Sans, sans-serif", "comment": "Paragraph and UI text" },
+      "mono": { "value": "JetBrains Mono, monospace", "comment": "Code, labels, badges, metadata" }
+    },
+    "fontSize": {
+      "xs": { "value": "0.75rem", "comment": "12px — badges, metadata" },
+      "sm": { "value": "0.875rem", "comment": "14px — body copy, nav" },
+      "base": { "value": "1rem", "comment": "16px — default" },
+      "lg": { "value": "1.125rem", "comment": "18px — sub-headings" },
+      "xl": { "value": "1.25rem", "comment": "20px" },
+      "2xl": { "value": "1.5rem", "comment": "24px" },
+      "3xl": { "value": "1.875rem", "comment": "30px" },
+      "4xl": { "value": "2.25rem", "comment": "36px — section titles mobile" },
+      "5xl": { "value": "3rem", "comment": "48px — section titles tablet" },
+      "6xl": { "value": "3.75rem", "comment": "60px — hero name mobile" },
+      "7xl": { "value": "4.5rem", "comment": "72px — hero name tablet" },
+      "8xl": { "value": "6rem", "comment": "96px — hero name desktop" }
+    },
+    "fontWeight": {
+      "light": { "value": "300" },
+      "regular": { "value": "400" },
+      "medium": { "value": "500" },
+      "semibold": { "value": "600" },
+      "bold": { "value": "700" },
+      "extrabold": { "value": "800" }
+    },
+    "lineHeight": {
+      "none": { "value": "1" },
+      "tight": { "value": "1.25" },
+      "snug": { "value": "1.375" },
+      "normal": { "value": "1.5" },
+      "relaxed": { "value": "1.625" },
+      "loose": { "value": "2" }
+    },
+    "letterSpacing": {
+      "tight": { "value": "-0.025em" },
+      "normal": { "value": "0" },
+      "wide": { "value": "0.025em" },
+      "wider": { "value": "0.05em" },
+      "widest": { "value": "0.1em", "comment": "Used on section labels" }
+    }
+  },
+  "spacing": {
+    "section": {
+      "mobile": { "value": "5rem", "comment": "80px — py-20" },
+      "tablet": { "value": "7rem", "comment": "112px — md:py-28" },
+      "desktop": { "value": "9rem", "comment": "144px — lg:py-36" }
+    },
+    "container": {
+      "maxWidth": { "value": "80rem", "comment": "1280px — max-w-7xl" },
+      "paddingX": {
+        "mobile": { "value": "1rem", "comment": "px-4" },
+        "tablet": { "value": "1.5rem", "comment": "sm:px-6" },
+        "desktop": { "value": "2rem", "comment": "lg:px-8" }
+      }
+    }
+  },
+  "borderRadius": {
+    "sm": { "value": "0.5rem", "comment": "rounded-lg — small buttons, badges" },
+    "md": { "value": "0.75rem", "comment": "rounded-xl — inputs, medium elements" },
+    "lg": { "value": "1rem", "comment": "rounded-2xl — cards, large sections" },
+    "full": { "value": "9999px", "comment": "rounded-full — pills, avatars" }
+  },
+  "shadow": {
+    "card": {
+      "value": "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+      "comment": "Default card depth"
+    },
+    "glowSm": { "value": "0 0 10px rgba(79,142,247,0.2)", "comment": "Subtle button glow" },
+    "glowMd": { "value": "0 0 20px rgba(79,142,247,0.3)", "comment": "Medium button glow on hover" },
+    "glowLg": { "value": "0 0 40px rgba(79,142,247,0.4)", "comment": "Strong glow for focus/active" },
+    "glowPurple": { "value": "0 0 30px rgba(167,139,250,0.3)", "comment": "Purple variant glow" }
+  },
+  "animation": {
+    "duration": {
+      "instant": { "value": "100ms" },
+      "fast": { "value": "200ms" },
+      "base": { "value": "300ms" },
+      "slow": { "value": "500ms" },
+      "slower": { "value": "700ms" },
+      "slowest": { "value": "1000ms" }
+    },
+    "easing": {
+      "linear": { "value": "linear" },
+      "easeIn": { "value": "cubic-bezier(0.4, 0, 1, 1)" },
+      "easeOut": { "value": "cubic-bezier(0, 0, 0.2, 1)" },
+      "easeInOut": { "value": "cubic-bezier(0.4, 0, 0.2, 1)" },
+      "expoOut": { "value": "cubic-bezier(0.16, 1, 0.3, 1)", "comment": "Primary spring-like ease used across animations" },
+      "spring": { "value": "spring(1, 80, 10, 0)", "comment": "Framer Motion spring config" }
+    }
+  },
+  "breakpoints": {
+    "sm": { "value": "640px" },
+    "md": { "value": "768px" },
+    "lg": { "value": "1024px" },
+    "xl": { "value": "1280px" },
+    "2xl": { "value": "1536px" }
+  },
+  "zIndex": {
+    "base": { "value": "0" },
+    "elevated": { "value": "10" },
+    "overlay": { "value": "40" },
+    "modal": { "value": "50" },
+    "skipLink": { "value": "9999" }
+  }
+}

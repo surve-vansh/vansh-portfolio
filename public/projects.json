@@ -1,0 +1,40 @@
+[
+  {
+    "id": "interactive-3d-portfolio",
+    "title": "Interactive 3D Portfolio",
+    "description": "A cutting-edge portfolio website with WebGL-powered 3D animations, particle systems, and immersive scroll experiences.",
+    "longDescription": "Built with Three.js and React, this portfolio features real-time 3D rendering, custom shader materials, interactive particle systems, and smooth scroll-driven animations. Performance optimized with LOD management and GPU instancing.",
+    "techStack": ["React", "Three.js", "TypeScript", "Framer Motion", "GLSL", "Vite"],
+    "githubUrl": "https://github.com/survevansh/3d-portfolio",
+    "liveUrl": "https://3d-portfolio.survevansh.dev",
+    "videoUrl": "https://example.com/demo-video-1.mp4",
+    "imageUrl": "/projects/portfolio-preview.png",
+    "featured": true,
+    "status": "completed"
+  },
+  {
+    "id": "video-demo-app",
+    "title": "hello",
+    "description": "A full-featured video streaming platform with custom player controls, adaptive bitrate streaming, and real-time collaboration.",
+    "longDescription": "A React-powered video platform featuring custom HLS player, adaptive bitrate streaming, chapter markers, real-time annotations, and collaborative viewing. Built with performance-first architecture supporting 1080p playback.",
+    "techStack": ["React", "TypeScript", "Tailwind CSS", "HLS.js", "WebSockets", "Node.js"],
+    "githubUrl": "https://github.com/survevansh/video-demo-app",
+    "liveUrl": "https://video-app.survevansh.dev",
+    "videoUrl": "https://example.com/demo-video-2.mp4",
+    "imageUrl": "/projects/video-app-preview.png",
+    "featured": true,
+    "status": "completed"
+  },
+  {
+    "id": "performance-dashboard",
+    "title": "Performance Dashboard",
+    "description": "A real-time analytics dashboard with live charts, custom visualizations, and AI-powered insights for web performance metrics.",
+    "longDescription": "A comprehensive performance monitoring dashboard built with React and D3.js. Features real-time WebSocket data streams, custom SVG visualizations, Core Web Vitals tracking, and AI-generated optimization suggestions.",
+    "techStack": ["React", "TypeScript", "D3.js", "Tailwind CSS", "WebSockets", "Recharts"],
+    "githubUrl": "https://github.com/survevansh/perf-dashboard",
+    "liveUrl": "https://dashboard.survevansh.dev",
+    "imageUrl": "/projects/dashboard-preview.png",
+    "featured": true,
+    "status": "in-progress"
+  }
+]
