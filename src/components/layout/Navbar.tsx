@@ -50,13 +50,20 @@ export default function Navbar() {
     return () => observer.disconnect()
   }, [])
 
-  const handleNavClick = useCallback((href: string) => {
-    setIsMenuOpen(false)
+ const handleNavClick = useCallback((href) => {
+  setIsMenuOpen(false)
+
+  setTimeout(() => {
     const el = document.querySelector(href)
+
     if (el) {
-      el.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' })
+      el.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth"
+      })
     }
-  }, [prefersReducedMotion])
+  }, 350)
+
+}, [prefersReducedMotion])
 
   return (
     <header
@@ -68,7 +75,7 @@ export default function Navbar() {
       role="banner"
     >
       <nav
-        className="section-container flex items-center justify-between h-16 md:h-20"
+        className="flex items-center justify-between h-16 section-container md:h-20"
         aria-label="Main navigation"
       >
         {/* Logo */}
@@ -81,17 +88,17 @@ export default function Navbar() {
           transition={{ duration: 0.5 }}
           aria-label="Surve Vansh - Home"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-display font-bold text-sm shadow-glow-sm group-hover:shadow-glow-md transition-shadow duration-300">
+          <div className="flex items-center justify-center w-8 h-8 text-sm font-bold text-white transition-shadow duration-300 rounded-lg bg-gradient-to-br from-accent-blue to-accent-purple font-display shadow-glow-sm group-hover:shadow-glow-md">
             SV
           </div>
-          <span className="font-display font-bold text-text-primary hidden sm:block">
+          <span className="hidden font-bold font-display text-text-primary sm:block">
             Surve<span className="text-accent-blue">.</span>
           </span>
         </motion.a>
 
         {/* Desktop Links */}
         <motion.ul
-          className="hidden md:flex items-center gap-1"
+          className="items-center hidden gap-1 md:flex"
           role="list"
           initial={prefersReducedMotion ? {} : { opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -115,7 +122,7 @@ export default function Navbar() {
                 {activeSection === link.href && (
                   <motion.span
                     layoutId="nav-active"
-                    className="absolute inset-0 rounded-lg bg-accent-blue/10 border border-accent-blue/20"
+                    className="absolute inset-0 border rounded-lg bg-accent-blue/10 border-accent-blue/20"
                     transition={{ type: 'spring', bounce: 0.25, duration: 0.4 }}
                   />
                 )}
@@ -128,7 +135,7 @@ export default function Navbar() {
         <motion.a
           href="#contact"
           onClick={e => { e.preventDefault(); handleNavClick('#contact') }}
-          className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple text-white shadow-glow-sm hover:shadow-glow-md transition-all duration-300 hover:scale-105 active:scale-95"
+          className="items-center hidden gap-2 px-4 py-2 text-sm font-medium text-white transition-all duration-300 md:flex rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple shadow-glow-sm hover:shadow-glow-md hover:scale-105 active:scale-95"
           initial={prefersReducedMotion ? {} : { opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
@@ -142,7 +149,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface transition-colors duration-200"
+          className="relative flex items-center justify-center w-10 h-10 transition-colors duration-200 rounded-lg md:hidden text-text-secondary hover:text-text-primary hover:bg-surface"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isMenuOpen}
@@ -174,7 +181,7 @@ export default function Navbar() {
         {isMenuOpen && (
           <motion.div
             id="mobile-menu"
-            className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl"
+            className="border-t md:hidden border-border bg-background/95 backdrop-blur-xl"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -182,7 +189,7 @@ export default function Navbar() {
             role="navigation"
             aria-label="Mobile navigation"
           >
-            <ul className="section-container py-4 flex flex-col gap-1" role="list">
+            <ul className="flex flex-col gap-1 py-4 section-container" role="list">
               {navLinks.map((link, i) => (
                 <motion.li
                   key={link.href}
@@ -211,7 +218,7 @@ export default function Navbar() {
               >
                 <button
                   onClick={() => handleNavClick('#contact')}
-                  className="w-full px-4 py-3 text-sm font-medium rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple text-white text-center"
+                  className="w-full px-4 py-3 text-sm font-medium text-center text-white rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple"
                 >
                   Let's Talk
                 </button>

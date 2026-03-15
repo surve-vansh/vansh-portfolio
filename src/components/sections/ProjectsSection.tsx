@@ -7,12 +7,12 @@ import { projects } from '@/data/projects'
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="section-padding relative overflow-hidden" aria-label="Projects">
+    <section id="projects" className="relative overflow-hidden section-padding" aria-label="Projects">
       {/* Background */}
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" aria-hidden="true" />
+      <div className="absolute right-0 translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none top-1/2 w-96 h-96 bg-accent-blue/5 blur-3xl" aria-hidden="true" />
 
       <div className="section-container">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div className="flex flex-col gap-6 mb-12 md:flex-row md:items-end md:justify-between">
           <SectionHeader
             label="// projects.featured"
             title="Selected Work"
@@ -27,7 +27,7 @@ export default function ProjectsSection() {
           >
             <Button
               as="a"
-              href="https://github.com/survevansh"
+              href="https://github.com/surve-vansh?tab=repositories"
               variant="secondary"
               size="sm"
               rightIcon={
@@ -44,7 +44,7 @@ export default function ProjectsSection() {
 
         {/* Projects grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
           variants={staggerContainerVariants}
           initial="hidden"
           whileInView="visible"
@@ -67,12 +67,12 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-text-muted text-sm mb-4 font-mono">
+          <p className="mb-4 font-mono text-sm text-text-muted">
             More projects available on GitHub →
           </p>
           <Button
             as="a"
-            href="https://github.com/survevansh"
+            href="https://github.com/surve-vansh?tab=repositories"
             variant="outline"
             leftIcon={
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">

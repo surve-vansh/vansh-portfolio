@@ -75,20 +75,5 @@ export const journeyItems: JourneyItem[] = [
       'Collections Framework',
       'Exception Handling',
     ],
-  },
-  {
-    id: 'video-app',
-    title: 'Launched Video Demo App',
-    organization: 'Personal Project',
-    period: '2024',
-    description:
-      'Shipped a full-featured video streaming application with custom player, adaptive streaming, and real-time collaboration features.',
-    type: 'project',
-    highlights: [
-      'HLS Adaptive Streaming',
-      'Custom video controls',
-      'Real-time annotations',
-      'Performance optimized',
-    ],
-  },
+  }
 ]

@@ -40,11 +40,11 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
       {/* Desktop: Left/Right content */}
       <div className={`hidden md:block md:w-[calc(50%-2rem)] ${isLeft ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
         <motion.div
-          className="glass-card p-5 inline-block w-full text-left"
+          className="inline-block w-full p-5 text-left glass-card"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <span
               className="px-2.5 py-0.5 text-xs font-mono font-medium rounded-full"
               style={{
@@ -55,16 +55,16 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
             >
               {config.icon} {config.label}
             </span>
-            <span className="text-xs font-mono text-text-muted">{item.period}</span>
+            <span className="font-mono text-xs text-text-muted">{item.period}</span>
           </div>
 
           <h3 className="font-display font-bold text-base text-text-primary mb-0.5">
             {item.title}
           </h3>
-          <p className="text-xs font-medium mb-2" style={{ color: accentColor }}>
+          <p className="mb-2 text-xs font-medium" style={{ color: accentColor }}>
             {item.organization}
           </p>
-          <p className="text-sm text-text-secondary leading-relaxed">{item.description}</p>
+          <p className="text-sm leading-relaxed text-text-secondary">{item.description}</p>
 
           {item.highlights && (
             <ul className="mt-3 space-y-1" role="list" aria-label="Key highlights">
@@ -80,9 +80,9 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
       </div>
 
       {/* Center dot */}
-      <div className="relative flex flex-col items-center md:w-16 flex-shrink-0">
+      <div className="relative flex flex-col items-center flex-shrink-0 md:w-16">
         <motion.div
-          className="w-10 h-10 rounded-full border-2 flex items-center justify-center text-base z-10 bg-background"
+          className="z-10 flex items-center justify-center w-10 h-10 text-base border-2 rounded-full bg-background"
           style={{ borderColor: accentColor, boxShadow: `0 0 15px ${accentColor}40` }}
           whileInView={{ scale: [0, 1.2, 1] }}
           viewport={{ once: true }}
@@ -93,7 +93,7 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
         </motion.div>
         {!isLast && (
           <div
-            className="absolute top-10 w-px flex-1 h-full"
+            className="absolute flex-1 w-px h-full top-10"
             style={{
               background: `linear-gradient(to bottom, ${accentColor}40, transparent)`,
             }}
@@ -106,9 +106,9 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
       <div className="hidden md:block md:w-[calc(50%-2rem)]" aria-hidden="true" />
 
       {/* Mobile card */}
-      <div className="flex-1 md:hidden pb-8">
-        <div className="glass-card p-5">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
+      <div className="flex-1 pb-8 md:hidden">
+        <div className="p-5 glass-card">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <span
               className="px-2.5 py-0.5 text-xs font-mono font-medium rounded-full"
               style={{
@@ -119,15 +119,15 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
             >
               {config.icon} {config.label}
             </span>
-            <span className="text-xs font-mono text-text-muted">{item.period}</span>
+            <span className="font-mono text-xs text-text-muted">{item.period}</span>
           </div>
           <h3 className="font-display font-bold text-base text-text-primary mb-0.5">
             {item.title}
           </h3>
-          <p className="text-xs font-medium mb-2" style={{ color: accentColor }}>
+          <p className="mb-2 text-xs font-medium" style={{ color: accentColor }}>
             {item.organization}
           </p>
-          <p className="text-sm text-text-secondary leading-relaxed">{item.description}</p>
+          <p className="text-sm leading-relaxed text-text-secondary">{item.description}</p>
           {item.highlights && (
             <ul className="mt-3 space-y-1">
               {item.highlights.map(h => (
@@ -146,7 +146,7 @@ function TimelineItem({ item, index, isLast }: TimelineItemProps) {
 
 export default function JourneySection() {
   return (
-    <section id="journey" className="section-padding relative overflow-hidden" aria-label="Learning journey and experience">
+    <section id="journey" className="relative overflow-hidden section-padding" aria-label="Learning journey and experience">
       <div className="section-container">
         <SectionHeader
           label="// journey.log"
@@ -156,7 +156,6 @@ export default function JourneySection() {
           className="mb-16"
         />
 
-        {/* Timeline */}
         <motion.div
           className="relative max-w-4xl mx-auto"
           variants={staggerContainerVariants}
@@ -164,9 +163,8 @@ export default function JourneySection() {
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
         >
-          {/* Vertical line (desktop) */}
           <div
-            className="absolute hidden md:block left-1/2 top-5 bottom-5 w-px -translate-x-1/2"
+            className="absolute hidden w-px -translate-x-1/2 md:block left-1/2 top-5 bottom-5"
             style={{
               background: 'linear-gradient(to bottom, transparent, #1e1e2e 10%, #1e1e2e 90%, transparent)',
             }}
