@@ -228,7 +228,7 @@ export default function HeroSection() {
                 <div className="rounded-full p-[3px] bg-background">
 
                   
-                  <div className="relative w-[200px] h-[200px] md:w-[280px] md:h-[280px] lg:w-[440px] lg:h-[440px] rounded-full overflow-hidden">
+                  <div className="relative w-[200px] h-[200px] md:w-[280px] md:h-[280px] lg:w-[400px] lg:h-[400px] rounded-full overflow-hidden">
                     <img
                       src="/vansh-profile.png"
                       alt="Surve Vansh — Frontend Developer"
