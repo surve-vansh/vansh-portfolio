@@ -50,7 +50,7 @@ export default function Navbar() {
     return () => observer.disconnect()
   }, [])
 
- const handleNavClick = useCallback((href) => {
+ const handleNavClick = useCallback((href: string) => {
   setIsMenuOpen(false)
 
   setTimeout(() => {

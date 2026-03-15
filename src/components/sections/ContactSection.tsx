@@ -23,7 +23,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'GitHub',
-    value: 'github.com/survevansh',
+    value: 'github.com/=-vansh',
     href: 'https://github.com/surve-vansh',
   },
   {
