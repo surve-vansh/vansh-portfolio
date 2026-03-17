@@ -33,7 +33,7 @@
     "techStack": ["React", "TypeScript", "D3.js", "Tailwind CSS", "WebSockets", "Recharts"],
     "githubUrl": "https://github.com/survevansh/perf-dashboard",
     "liveUrl": "https://dashboard.survevansh.dev",
-    "imageUrl": "/projects/dashboard-preview.png",
+    "imageUrl": "/shopverse.png",
     "featured": true,
     "status": "in-progress"
   }

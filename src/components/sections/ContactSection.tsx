@@ -23,7 +23,7 @@ const contactInfo = [
       </svg>
     ),
     label: 'GitHub',
-    value: 'github.com/=-vansh',
+    value: 'github.com/surve-vansh',
     href: 'https://github.com/surve-vansh',
   },
   {
@@ -108,8 +108,16 @@ function Textarea({ label, error, id, ...props }: TextareaProps) {
 }
 
 export default function ContactSection() {
-  const { formData, errors, isSubmitting, isSuccess, handleChange, handleSubmit, resetForm } =
-    useContactForm()
+  const {
+    formData,
+    errors,
+    isSubmitting,
+    isSuccess,
+    submitError,
+    handleChange,
+    handleSubmit,
+    resetForm,
+  } = useContactForm()
 
   return (
     <section id="contact" className="relative overflow-hidden section-padding" aria-label="Contact me">
@@ -139,7 +147,6 @@ export default function ContactSection() {
               <h3 className="text-base font-bold font-display text-text-primary">
                 Contact Info
               </h3>
-
               <div className="space-y-4" role="list" aria-label="Contact information">
                 {contactInfo.map(info => (
                   <a
@@ -262,6 +269,22 @@ export default function ContactSection() {
                   error={errors.message}
                   required
                 />
+
+                {/* ── Global submit error ── */}
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-2 px-4 py-3 text-sm text-red-400 border rounded-xl bg-red-500/10 border-red-500/20"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 mt-0.5" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    {submitError}
+                  </motion.div>
+                )}
 
                 <div className="flex items-center justify-between pt-1">
                   <p className="text-xs text-text-muted">

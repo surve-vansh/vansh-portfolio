@@ -1,41 +1,31 @@
 import { useState, useCallback } from 'react'
-import type { ContactFormData, FormErrors } from '@/types'
+import emailjs from '@emailjs/browser'
 
-interface UseContactFormReturn {
-  formData: ContactFormData
-  errors: FormErrors
-  isSubmitting: boolean
-  isSuccess: boolean
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-  handleSubmit: (e: React.FormEvent) => Promise<void>
-  resetForm: () => void
+interface FormData {
+  name: string
+  email: string
+  message: string
 }
 
-const initialFormData: ContactFormData = {
+interface FormErrors {
+  name?: string
+  email?: string
+  message?: string
+}
+
+const INITIAL_FORM: FormData = {
   name: '',
   email: '',
   message: '',
 }
 
-function sanitizeInput(input: string): string {
-  return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .trim()
-}
-
-function validateForm(data: ContactFormData): FormErrors {
+function validate(data: FormData): FormErrors {
   const errors: FormErrors = {}
 
   if (!data.name.trim()) {
     errors.name = 'Name is required'
   } else if (data.name.trim().length < 2) {
     errors.name = 'Name must be at least 2 characters'
-  } else if (data.name.trim().length > 100) {
-    errors.name = 'Name must be under 100 characters'
   }
 
   if (!data.email.trim()) {
@@ -48,18 +38,17 @@ function validateForm(data: ContactFormData): FormErrors {
     errors.message = 'Message is required'
   } else if (data.message.trim().length < 10) {
     errors.message = 'Message must be at least 10 characters'
-  } else if (data.message.trim().length > 1000) {
-    errors.message = 'Message must be under 1000 characters'
   }
 
   return errors
 }
 
-export function useContactForm(): UseContactFormReturn {
-  const [formData, setFormData] = useState<ContactFormData>(initialFormData)
+export function useContactForm() {
+  const [formData, setFormData] = useState<FormData>(INITIAL_FORM)
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -69,38 +58,45 @@ export function useContactForm(): UseContactFormReturn {
       if (errors[name as keyof FormErrors]) {
         setErrors(prev => ({ ...prev, [name]: undefined }))
       }
+      if (submitError) setSubmitError(null)
     },
-    [errors]
+    [errors, submitError]
   )
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
-      const validationErrors = validateForm(formData)
+
+      // Validate
+      const validationErrors = validate(formData)
       if (Object.keys(validationErrors).length > 0) {
         setErrors(validationErrors)
         return
       }
 
       setIsSubmitting(true)
-      setErrors({})
+      setSubmitError(null)
 
       try {
-        // Sanitize inputs before sending
-        const sanitizedData = {
-          name: sanitizeInput(formData.name),
-          email: sanitizeInput(formData.email),
-          message: sanitizeInput(formData.message),
-        }
-
-        // Simulate API call (replace with real serverless function)
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        console.log('Form submitted:', sanitizedData)
+        await emailjs.send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+            to_name: 'Vansh',
+            reply_to: formData.email,
+          },
+          import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        )
 
         setIsSuccess(true)
-        setFormData(initialFormData)
-      } catch {
-        setErrors({ message: 'Failed to send message. Please try again.' })
+        setFormData(INITIAL_FORM)
+        setErrors({})
+      } catch (err) {
+        console.error('EmailJS error:', err)
+        setSubmitError('Failed to send message. Please try again or email me directly.')
       } finally {
         setIsSubmitting(false)
       }
@@ -109,10 +105,20 @@ export function useContactForm(): UseContactFormReturn {
   )
 
   const resetForm = useCallback(() => {
-    setFormData(initialFormData)
+    setFormData(INITIAL_FORM)
     setErrors({})
     setIsSuccess(false)
+    setSubmitError(null)
   }, [])
 
-  return { formData, errors, isSubmitting, isSuccess, handleChange, handleSubmit, resetForm }
+  return {
+    formData,
+    errors,
+    isSubmitting,
+    isSuccess,
+    submitError,
+    handleChange,
+    handleSubmit,
+    resetForm,
+  }
 }

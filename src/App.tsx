@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import LoadingScreen from '@/components/ui/LoadingScreen'
+import AskVanshAI from "@/components/AskVanshAI"
 
 // Lazy load the home page for code splitting
 const HomePage = lazy(() => import('@/pages/HomePage'))
@@ -30,6 +31,7 @@ function App() {
       </main>
 
       <Footer />
+      <AskVanshAI />
     </div>
   )
 }
