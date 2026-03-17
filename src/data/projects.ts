@@ -39,7 +39,7 @@ export const projects: Project[] = [
       'A React-based eCommerce frontend built using component-based architecture. The application displays product listings and reusable UI components with a responsive layout. The project demonstrates React fundamentals, component structure, and modern frontend development practices.',
     techStack: ['React', 'JavaScript', 'Tailwind CSS', 'Vite'],
     githubUrl: 'https://github.com/surve-vansh/shopeverse',
-    liveUrl: 'https://shope-verse.netlify.app/',
+    liveUrl: 'https://shopeverse.vercel.app/',
     imageUrl: '/projects/react-ecommerce-preview.png',
     featured: true,
     status: 'completed',
