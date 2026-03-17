@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 
-// ─── System context ────────────────────────────────────────────────────────────
 const SYSTEM_CONTEXT = `
 You are "Vansh AI" — a smart, friendly personal assistant embedded in Surve Vansh's portfolio website.
 Answer ONLY questions related to Vansh. Be concise, warm, and professional.
@@ -32,9 +31,7 @@ If asked anything unrelated to Vansh, politely say:
 "I'm here to answer questions about Vansh! Feel free to ask about his skills, projects, education, or how to get in touch."
 `;
 
-// ─── Constants ─────────────────────────────────────────────────────────────────
 const GREETING = "Hey there! 👋 I'm Vansh AI. Ask me anything about Surve Vansh — his skills, projects, education, or how to get in touch!";
-
 const INITIAL_MESSAGE = { from: "ai" as const, text: GREETING };
 
 const INITIAL_SUGGESTIONS = [
@@ -49,16 +46,13 @@ const POST_REPLY_SUGGESTIONS = [
   ["What technologies does Vansh use?", "Is Vansh available for work?"],
 ];
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
 type Message = {
   from: "user" | "ai";
   text: string;
 };
 
-// ─── Groq API call ─────────────────────────────────────────────────────────────
 async function askGroq(userMessage: string, history: Message[]): Promise<string> {
   const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-
   const messages = [
     { role: "system", content: SYSTEM_CONTEXT },
     ...history.map((msg) => ({
@@ -92,7 +86,6 @@ async function askGroq(userMessage: string, history: Message[]): Promise<string>
   return data.choices?.[0]?.message?.content || "Sorry, I couldn't generate a response.";
 }
 
-// ─── Typing Animation ──────────────────────────────────────────────────────────
 function TypingIndicator() {
   return (
     <div className="flex justify-start mb-3">
@@ -106,7 +99,6 @@ function TypingIndicator() {
         className="flex items-center gap-2 px-4 py-3 border rounded-bl-sm rounded-2xl"
         style={{ background: "#1e1e1e", borderColor: "#2a2a2a" }}
       >
-        {/* Animated dots */}
         <div className="flex items-center gap-1">
           {[0, 1, 2].map((i) => (
             <span
@@ -120,7 +112,6 @@ function TypingIndicator() {
             />
           ))}
         </div>
-        {/* Typing text */}
         <span
           style={{
             fontFamily: "'DM Mono', monospace",
@@ -137,7 +128,6 @@ function TypingIndicator() {
   );
 }
 
-// ─── Message Bubble ────────────────────────────────────────────────────────────
 function MessageBubble({ msg }: { msg: Message }) {
   const isUser = msg.from === "user";
   return (
@@ -151,10 +141,9 @@ function MessageBubble({ msg }: { msg: Message }) {
         </div>
       )}
       <div
-        className={`max-w-[78%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${isUser
-            ? "rounded-br-sm font-medium text-black"
-            : "rounded-bl-sm border"
-          }`}
+        className={`max-w-[78%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+          isUser ? "rounded-br-sm font-medium text-black" : "rounded-bl-sm border"
+        }`}
         style={
           isUser
             ? { background: "#10b981" }
@@ -167,7 +156,6 @@ function MessageBubble({ msg }: { msg: Message }) {
   );
 }
 
-// ─── Suggestion Chips ──────────────────────────────────────────────────────────
 function SuggestionChips({
   suggestions,
   onSelect,
@@ -191,16 +179,9 @@ function SuggestionChips({
             background: "transparent",
             fontFamily: "'DM Mono', monospace",
             letterSpacing: "0.03em",
-          }}
-          onMouseEnter={(e) => {
-            if (!disabled) {
-              (e.target as HTMLButtonElement).style.background = "#10b98115";
-              (e.target as HTMLButtonElement).style.borderColor = "#10b98166";
-            }
-          }}
-          onMouseLeave={(e) => {
-            (e.target as HTMLButtonElement).style.background = "transparent";
-            (e.target as HTMLButtonElement).style.borderColor = "#10b98133";
+            // FIX 1: prevent tap highlight & touch delay on mobile
+            WebkitTapHighlightColor: "transparent",
+            touchAction: "manipulation",
           }}
         >
           {s}
@@ -210,17 +191,33 @@ function SuggestionChips({
   );
 }
 
-// ─── Main Component ────────────────────────────────────────────────────────────
 export default function AskVanshAI() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiReplyCount, setAiReplyCount] = useState(0);
+  // FIX 2: track mobile keyboard open to adjust chat height
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // ── Reset chat to initial state ──
+  // FIX 3: listen to visual viewport resize (mobile keyboard open/close)
+  useEffect(() => {
+    const handleResize = () => {
+      // visualViewport is more accurate on mobile than window.innerHeight
+      const h = window.visualViewport?.height ?? window.innerHeight;
+      setViewportHeight(h);
+    };
+
+    window.visualViewport?.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.visualViewport?.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const resetChat = () => {
     setMessages([INITIAL_MESSAGE]);
     setInput("");
@@ -228,33 +225,38 @@ export default function AskVanshAI() {
     setAiReplyCount(0);
   };
 
-  // ── Close and reset ──
   const handleClose = () => {
     setIsOpen(false);
-    setTimeout(() => resetChat(), 300); // reset after close animation
+    setTimeout(() => resetChat(), 300);
   };
 
-  // ── Open chat ──
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
+  const handleOpen = () => setIsOpen(true);
 
-  // ── Auto scroll ──
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  // ── Focus input on open ──
+  // FIX 4: don't auto-focus on mobile (prevents keyboard from jumping open)
   useEffect(() => {
-    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
+    if (isOpen) {
+      const isMobile = window.innerWidth < 768;
+      if (!isMobile) {
+        setTimeout(() => inputRef.current?.focus(), 300);
+      }
+    }
   }, [isOpen]);
 
-  // ── Send message ──
   const sendMessage = async (text?: string) => {
     const userText = (text ?? input).trim();
     if (!userText || loading) return;
 
     setInput("");
+
+    // FIX 5: blur input on mobile after sending to dismiss keyboard
+    if (window.innerWidth < 768) {
+      inputRef.current?.blur();
+    }
+
     const updatedMessages: Message[] = [...messages, { from: "user", text: userText }];
     setMessages(updatedMessages);
     setLoading(true);
@@ -280,13 +282,18 @@ export default function AskVanshAI() {
     }
   };
 
-  // Pick suggestion set based on reply count (cycles through sets)
   const currentSuggestions =
     POST_REPLY_SUGGESTIONS[aiReplyCount % POST_REPLY_SUGGESTIONS.length];
 
+  // FIX 6: compute chat window size based on actual visible viewport
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const chatBottom = isMobile ? 80 : 88;
+  const chatHeight = isMobile
+    ? viewportHeight - chatBottom - 16   // fills visible area on mobile
+    : Math.min(520, viewportHeight - 120); // capped on desktop
+
   return (
     <>
-      {/* ── Keyframes ── */}
       <style>{`
         @keyframes vanshBounce {
           0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
@@ -311,16 +318,38 @@ export default function AskVanshAI() {
         .vansh-chat-enter { animation: vanshSlideUp 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards; }
         .vansh-fab-pulse  { animation: vanshPulse 2.4s infinite; }
         .vansh-chip-in    { animation: vanshChipIn 0.3s ease forwards; }
+
+        /* FIX 7: prevent mobile scroll bounce affecting the chat */
+        .vansh-scroll {
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+        }
+
+        /* FIX 8: prevent iOS input zoom (font-size must be >= 16px) */
+        .vansh-input {
+          font-size: 16px !important;
+        }
+        @media (min-width: 768px) {
+          .vansh-input { font-size: 14px !important; }
+        }
       `}</style>
 
-      {/* ── FAB Button ── */}
+      {/* FAB Button */}
       <button
         onClick={isOpen ? handleClose : handleOpen}
         aria-label="Toggle Vansh AI chat"
-        className="fixed z-50 flex items-center justify-center transition-colors duration-200 rounded-full shadow-2xl vansh-fab-pulse bottom-6 right-6 w-14 h-14"
-        style={{ background: "#10b981" }}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#34d399")}
-        onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#10b981")}
+        className="fixed z-50 flex items-center justify-center rounded-full shadow-2xl vansh-fab-pulse"
+        style={{
+          background: "#10b981",
+          bottom: "24px",
+          right: "24px",
+          width: "56px",
+          height: "56px",
+          // FIX 9: prevent double-tap zoom on mobile FAB
+          WebkitTapHighlightColor: "transparent",
+          touchAction: "manipulation",
+        }}
       >
         {isOpen ? (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round">
@@ -333,15 +362,16 @@ export default function AskVanshAI() {
         )}
       </button>
 
-      {/* ── Chat Window ── */}
+      {/* Chat Window */}
       {isOpen && (
         <div
-          className="fixed z-50 flex flex-col overflow-hidden vansh-chat-enter bottom-24 right-6 rounded-2xl"
+          className="fixed z-50 flex flex-col overflow-hidden vansh-chat-enter rounded-2xl"
           style={{
-            width: "360px",
-            maxWidth: "calc(100vw - 24px)",
-            height: "min(520px, calc(100vh - 120px))",  // never taller than viewport
-            bottom: "88px",                              // consistent on all screens
+            // FIX 10: full-width on mobile, fixed width on desktop
+            width: isMobile ? "calc(100vw - 16px)" : "360px",
+            height: `${chatHeight}px`,
+            bottom: `${chatBottom}px`,
+            right: isMobile ? "8px" : "24px",
             background: "#0d0d0d",
             border: "1px solid #222",
             boxShadow: "0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(16,185,129,0.08)",
@@ -365,7 +395,7 @@ export default function AskVanshAI() {
               />
             </div>
             <div>
-              <p className="text-white text-sm font-semibold leading-none mb-0.5">
+              <p className="text-sm font-semibold text-white leading-none mb-0.5">
                 Ask Vansh AI
               </p>
               <p className="text-xs" style={{ color: "#10b981" }}>
@@ -376,10 +406,12 @@ export default function AskVanshAI() {
             <button
               onClick={resetChat}
               title="Reset conversation"
-              className="ml-auto mr-2 transition-colors"
-              style={{ color: "#444" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#10b981")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#444")}
+              className="ml-auto mr-2"
+              style={{
+                color: "#444",
+                WebkitTapHighlightColor: "transparent",
+                touchAction: "manipulation",
+              }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
@@ -389,10 +421,11 @@ export default function AskVanshAI() {
             {/* Close button */}
             <button
               onClick={handleClose}
-              className="transition-colors"
-              style={{ color: "#444" }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#e5e5e5")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#444")}
+              style={{
+                color: "#444",
+                WebkitTapHighlightColor: "transparent",
+                touchAction: "manipulation",
+              }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -400,18 +433,14 @@ export default function AskVanshAI() {
             </button>
           </div>
 
-          {/* Messages */}
-          <div
-            className="flex-1 px-4 py-4 overflow-y-auto"
-            style={{ scrollbarWidth: "thin", scrollbarColor: "#2a2a2a transparent" }}
-          >
+          {/* Messages — FIX 11: use vansh-scroll class for iOS smooth scroll */}
+          <div className="flex-1 px-4 py-4 vansh-scroll">
             {messages.map((msg, i) => {
               const isLastAI = msg.from === "ai" && i === messages.length - 1 && !loading;
               const isInitialGreeting = i === 0 && msg.from === "ai";
               return (
                 <div key={i}>
                   <MessageBubble msg={msg} />
-                  {/* Suggestions after first greeting */}
                   {isInitialGreeting && messages.length === 1 && (
                     <div className="vansh-chip-in">
                       <SuggestionChips
@@ -421,7 +450,6 @@ export default function AskVanshAI() {
                       />
                     </div>
                   )}
-                  {/* Suggestions after each AI reply (except greeting) */}
                   {isLastAI && i > 0 && (
                     <div className="vansh-chip-in">
                       <SuggestionChips
@@ -434,8 +462,6 @@ export default function AskVanshAI() {
                 </div>
               );
             })}
-
-            {/* Typing indicator */}
             {loading && <TypingIndicator />}
             <div ref={bottomRef} />
           </div>
@@ -448,12 +474,17 @@ export default function AskVanshAI() {
             <input
               ref={inputRef}
               type="text"
+              inputMode="text"        // FIX 12: correct keyboard type on mobile
+              autoComplete="off"      // FIX 13: prevent autocomplete popup overlapping UI
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck={false}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask about Vansh…"
               disabled={loading}
-              className="flex-1 rounded-xl px-4 py-2.5 text-sm outline-none transition-colors disabled:opacity-50"
+              className="vansh-input flex-1 rounded-xl px-4 py-2.5 outline-none transition-colors disabled:opacity-50"
               style={{
                 background: "#1a1a1a",
                 border: "1px solid #2a2a2a",
@@ -465,10 +496,14 @@ export default function AskVanshAI() {
             <button
               onClick={() => sendMessage()}
               disabled={loading || !input.trim()}
-              className="flex items-center justify-center flex-shrink-0 w-10 h-10 transition-colors rounded-xl disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ background: "#10b981" }}
-              onMouseEnter={(e) => { if (!loading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background = "#34d399"; }}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#10b981")}
+              className="flex items-center justify-center flex-shrink-0 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{
+                background: "#10b981",
+                width: "40px",
+                height: "40px",
+                WebkitTapHighlightColor: "transparent",
+                touchAction: "manipulation",
+              }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" />
